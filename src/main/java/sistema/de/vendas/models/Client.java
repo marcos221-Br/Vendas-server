@@ -49,24 +49,24 @@ public class Client implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
+    public String getName(){
         return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(String name){
         this.name = name;
     }
 
-    public String getCellphone() {
+    public String getCellphone(){
         return this.cellphone;
     }
 
-    public void setCellphone(String cellphone) {
+    public void setCellphone(String cellphone){
         this.cellphone = cellphone;
     }
 
     @Override
-    public String toString() {
+    public String toString(){
         return "Client\nId: " + this.id + "\nName: " + this.name + "\nCellphone: " + this.cellphone;
     }
 }
