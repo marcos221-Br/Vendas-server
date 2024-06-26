@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,20 +30,22 @@ public class UserServiceTest {
     private UserRepository repository;
 
     User user;
+    HttpHeaders headers;
 
     @BeforeAll
     public void start(){
         this.user = new User("Marcos","Marcos123","administrator");
+        this.headers = new HttpHeaders();
+        headers.add("Authorization", "Basic VXNlclRlc3RlOjEyMzQ1Ng==");
     }
 
     @Test
     public void createUserTest(){
         User user = new User("Marcos","Marcos123","administrator");
 
-        HttpEntity<User> httpEntity = new HttpEntity<>(user);
+        HttpEntity<User> httpEntity = new HttpEntity<>(user, headers);
 
-        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users", HttpMethod.POST, httpEntity,
-                                                                        User.class);
+        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users", HttpMethod.POST, httpEntity, User.class);
         
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertEquals(response.getBody().getName(), "Marcos");
@@ -50,7 +53,8 @@ public class UserServiceTest {
 
     @Test
     public void findAllUsersTest(){
-        ResponseEntity<User[]> response = this.testRestTemplate.exchange("/api/users", HttpMethod.GET, null, User[].class);
+        HttpEntity<User> httpEntity = new HttpEntity<>(headers);
+        ResponseEntity<User[]> response = this.testRestTemplate.exchange("/api/users", HttpMethod.GET, httpEntity, User[].class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 
@@ -58,7 +62,9 @@ public class UserServiceTest {
     public void findUserByIdTest(){
         User user = this.repository.save(this.user);
 
-        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users/" + user.getId(), HttpMethod.GET, null, User.class);
+        HttpEntity<User> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users/" + user.getId(), HttpMethod.GET, httpEntity, User.class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertEquals(response.getBody().getName(), "Marcos");
     }
@@ -70,7 +76,7 @@ public class UserServiceTest {
         User userUpdate = user;
         userUpdate.setPassword("MarcosUpdate");
 
-        HttpEntity<User> httpEntity = new HttpEntity<>(userUpdate);
+        HttpEntity<User> httpEntity = new HttpEntity<>(userUpdate, headers);
 
         ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users/" + user.getId(), HttpMethod.PUT, httpEntity, User.class);
         
@@ -82,7 +88,9 @@ public class UserServiceTest {
     public void deleteUser(){
         User user = this.repository.save(this.user);
 
-        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users/" + user.getId(), HttpMethod.DELETE, null, User.class);
+        HttpEntity<User> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users/" + user.getId(), HttpMethod.DELETE, httpEntity, User.class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 }
