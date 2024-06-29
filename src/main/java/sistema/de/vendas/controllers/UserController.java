@@ -16,7 +16,7 @@ import sistema.de.vendas.database.UserService;
 import sistema.de.vendas.models.User;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
     
     @Autowired

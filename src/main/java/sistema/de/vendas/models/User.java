@@ -2,6 +2,9 @@ package sistema.de.vendas.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -77,10 +80,12 @@ public class User implements Serializable{
         this.name = name;
     }
 
+    @JsonIgnore
     public String getPassword(){
         return this.password;
     }
 
+    @JsonProperty("password")
     public void setPassword(String password){
         this.password = password;
     }

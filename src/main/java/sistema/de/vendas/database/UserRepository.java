@@ -9,4 +9,5 @@ public interface UserRepository extends JpaRepository<User, Integer>{
     
     @Query(value = "SELECT * FROM users WHERE name=? AND password=?",nativeQuery = true)
     public User findByNameAndPassword(String name, String password);
+
 }
