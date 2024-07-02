@@ -39,11 +39,16 @@ public class UserController {
 
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Integer id, @RequestBody User user){
-        return this.userService.updatUser(id, user);
+        return this.userService.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Integer id){
         this.userService.deleteUser(id);
+    }
+
+    @GetMapping("/{name}")
+    public User getUserByName(@PathVariable String name){
+        return this.userService.getUserByName(name);
     }
 }

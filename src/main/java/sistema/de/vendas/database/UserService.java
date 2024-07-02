@@ -25,7 +25,7 @@ public class UserService{
         return this.userRepository.findById(id).orElse(null);
     }
 
-    public User updatUser(Integer id, User user){
+    public User updateUser(Integer id, User user){
         user.setId(id);
         return this.userRepository.save(user);
     }
@@ -36,5 +36,9 @@ public class UserService{
 
     public User getUserByNameAndPassword(String name, String password){
         return this.userRepository.findByNameAndPassword(name, password);
+    }
+
+    public User getUserByName(String name){
+        return this.userRepository.findByName(name);
     }
 }
