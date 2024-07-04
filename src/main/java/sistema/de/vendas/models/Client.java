@@ -27,7 +27,7 @@ public class Client implements Serializable{
     private String name;
 
     @Basic(optional = false)
-    @Column(name = "cellphone")
+    @Column(name = "cellphone", unique = true)
     private String cellphone;
 
     public Client(Integer id, String name, String cellphone){
@@ -39,6 +39,10 @@ public class Client implements Serializable{
     public Client(String name, String cellphone){
         this.name = name;
         this.cellphone = cellphone;
+    }
+
+    public Client(){
+        
     }
 
     public Integer getId(){

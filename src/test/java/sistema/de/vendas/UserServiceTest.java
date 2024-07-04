@@ -41,11 +41,9 @@ public class UserServiceTest {
 
     @Test
     public void createUserTest(){
-        User user = new User("Marcos","Marcos123","administrator");
+        HttpEntity<User> httpEntity = new HttpEntity<>(this.user, headers);
 
-        HttpEntity<User> httpEntity = new HttpEntity<>(user, headers);
-
-        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users", HttpMethod.POST, httpEntity, User.class);
+        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/user", HttpMethod.POST, httpEntity, User.class);
         
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertEquals(response.getBody().getName(), "Marcos");
@@ -54,7 +52,8 @@ public class UserServiceTest {
     @Test
     public void findAllUsersTest(){
         HttpEntity<User> httpEntity = new HttpEntity<>(headers);
-        ResponseEntity<User[]> response = this.testRestTemplate.exchange("/api/users", HttpMethod.GET, httpEntity, User[].class);
+
+        ResponseEntity<User[]> response = this.testRestTemplate.exchange("/api/user", HttpMethod.GET, httpEntity, User[].class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 
@@ -64,13 +63,13 @@ public class UserServiceTest {
 
         HttpEntity<User> httpEntity = new HttpEntity<>(headers);
 
-        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users/" + user.getId(), HttpMethod.GET, httpEntity, User.class);
+        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/user/" + user.getId(), HttpMethod.GET, httpEntity, User.class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertEquals(response.getBody().getName(), "Marcos");
     }
 
     @Test
-    public void alterUser(){
+    public void alterUserTest(){
         User user = this.repository.save(this.user);
 
         User userUpdate = user;
@@ -78,19 +77,30 @@ public class UserServiceTest {
 
         HttpEntity<User> httpEntity = new HttpEntity<>(userUpdate, headers);
 
-        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users/" + user.getId(), HttpMethod.PUT, httpEntity, User.class);
+        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/user/" + user.getId(), HttpMethod.PUT, httpEntity, User.class);
         
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertEquals(response.getBody().getPassword(), "MarcosUpdate");
     }
 
     @Test
-    public void deleteUser(){
+    public void deleteUserTest(){
         User user = this.repository.save(this.user);
 
         HttpEntity<User> httpEntity = new HttpEntity<>(headers);
 
-        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/users/" + user.getId(), HttpMethod.DELETE, httpEntity, User.class);
+        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/user/" + user.getId(), HttpMethod.DELETE, httpEntity, User.class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void findUserByNameTest(){
+        User user = this.repository.save(this.user);
+
+        HttpEntity<User> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<User> response = this.testRestTemplate.exchange("/api/user/" + user.getName(), HttpMethod.GET, httpEntity, User.class);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(response.getBody().getName(), "Marcos");
     }
 }
