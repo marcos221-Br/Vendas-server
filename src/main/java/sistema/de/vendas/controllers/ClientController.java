@@ -32,7 +32,7 @@ public class ClientController {
         return this.clientService.getAllClients();
     }
     
-    @GetMapping("/{id}")
+    //@GetMapping("/{id}")
     public Client getClientById(@PathVariable Integer id) {
         return this.clientService.getClientById(id);
     }
