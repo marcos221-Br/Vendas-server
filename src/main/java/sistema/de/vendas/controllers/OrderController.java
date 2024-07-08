@@ -1,5 +1,6 @@
 package sistema.de.vendas.controllers;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class OrderController {
 
     @PostMapping
     public Order createOrder(@RequestBody Order order){
+        order.setDate(new Date(System.currentTimeMillis()));
         return this.orderService.createOrder(order);
     }
 
