@@ -1,6 +1,7 @@
 package sistema.de.vendas.models;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -11,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "orders")
@@ -25,35 +28,24 @@ public class Order implements Serializable{
     private Integer id;
 
     @Basic(optional = false)
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    @Basic(optional = false)
-    @Column(name = "description")
-    private String description;
-
-    @Basic(optional = false)
-    @Column(name = "value")
-    private Float value;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date")
+    private Date date;
 
     @Basic(optional = false)
     @ManyToOne
     @JoinColumn(name = "idclient", referencedColumnName = "idclient")
     private Client client;
 
-    public Order(Integer id, Integer quantity, String description, Float value, Client client){
+    public Order(Integer id, Client client, Date date){
         this.id = id;
-        this.quantity = quantity;
-        this.description = description;
-        this.value = value;
         this.client = client;
+        this.date = date;
     }
 
-    public Order(Integer quantity, String description, Float value, Client client){
-        this.quantity = quantity;
-        this.description = description;
-        this.value = value;
+    public Order(Client client, Date date){
         this.client = client;
+        this.date = date;
     }
 
     public Order(){
@@ -68,28 +60,12 @@ public class Order implements Serializable{
         this.id = id;
     }
 
-    public Integer getQuantity(){
-        return this.quantity;
+    public Date getDate(){
+        return this.date;
     }
 
-    public void setQuantity(Integer quantity){
-        this.quantity = quantity;
-    }
-
-    public String getDescription(){
-        return this.description;
-    }
-
-    public void setDescription(String description){
-        this.description = description;
-    }
-
-    public Float getValue(){
-        return this.value;
-    }
-
-    public void setValue(Float value){
-        this.value = value;
+    public void setDate(Date date){
+        this.date = date;
     }
 
     public Client getClient(){
@@ -102,6 +78,6 @@ public class Order implements Serializable{
 
     @Override
     public String toString(){
-        return "Order\nId: " + this.id + "\nQuantity: " + this.quantity + "\nDescription: " + this.description + "\nValue: " + this.value + "\nClient: " + this.client;
+        return "Order\nId: " + this.id + "\nClient: " + this.client;
     }
 }
