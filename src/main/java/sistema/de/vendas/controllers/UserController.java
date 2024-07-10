@@ -32,7 +32,7 @@ public class UserController {
         return this.userService.getAllUsers();
     }
     
-    @GetMapping("/{id}")
+    //@GetMapping("/{id}")
     public User getUserById(@PathVariable Integer id){
         return this.userService.getUserById(id);
     }
