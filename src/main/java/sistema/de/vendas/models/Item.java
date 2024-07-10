@@ -92,6 +92,14 @@ public class Item implements Serializable{
         this.value = value;
     }
 
+    public Order getOrder(){
+        return this.order;
+    }
+
+    public void setOrder(Order order){
+        this.order = order;
+    }
+
     @Override
     public String toString(){
         return "Item\nId: " + this.id + "\nQuantity: " + this.quantity + "\nDescription: " + this.description + "\nValue: " + this.value + "\nOrder: " + this.order;

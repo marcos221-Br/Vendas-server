@@ -78,6 +78,6 @@ public class Order implements Serializable{
 
     @Override
     public String toString(){
-        return "Order\nId: " + this.id + "\nClient: " + this.client;
+        return "Order\nId: " + this.id + "\nDate: " + this.date + "\nClient: " + this.client;
     }
 }

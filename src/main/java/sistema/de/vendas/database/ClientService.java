@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sistema.de.vendas.models.Client;
+import sistema.de.vendas.models.Order;
 
 @Service
 public class ClientService{
     
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private OrderService orderService;
 
     public Client createClient(Client client){
         return this.clientRepository.save(client);
@@ -31,6 +35,9 @@ public class ClientService{
     }
 
     public void deleteClient(Integer id){
+        for (Order order : this.orderService.getOrdersByIdClient(id)) {
+            this.orderService.deleteOrder(order.getId());
+        }
         this.clientRepository.deleteById(id);
     }
 

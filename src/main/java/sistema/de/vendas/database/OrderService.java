@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sistema.de.vendas.models.Item;
 import sistema.de.vendas.models.Order;
 
 @Service
@@ -12,6 +13,9 @@ public class OrderService {
     
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private ItemService itemService;
     
     public Order createOrder(Order order){
         return this.orderRepository.save(order);
@@ -31,6 +35,9 @@ public class OrderService {
     }
 
     public void deleteOrder(Integer id){
+        for (Item item : this.itemService.getItensByIdOrder(id)) {
+            this.itemService.deleteItem(item.getId());
+        }
         this.orderRepository.deleteById(id);
     }
 
