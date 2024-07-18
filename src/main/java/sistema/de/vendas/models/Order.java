@@ -32,20 +32,26 @@ public class Order implements Serializable{
     @Column(name = "date")
     private Date date;
 
+    @Basic(optional = true)
+    @Column(name = "progress")
+    private String progress;
+
     @Basic(optional = false)
     @ManyToOne
     @JoinColumn(name = "idclient", referencedColumnName = "idclient")
     private Client client;
 
-    public Order(Integer id, Client client, Date date){
+    public Order(Integer id, Client client, Date date, String progress){
         this.id = id;
         this.client = client;
         this.date = date;
+        this.progress = progress;
     }
 
-    public Order(Client client, Date date){
+    public Order(Client client, Date date, String progress){
         this.client = client;
         this.date = date;
+        this.progress = progress;
     }
 
     public Order(){
@@ -67,6 +73,14 @@ public class Order implements Serializable{
     public void setDate(Date date){
         this.date = date;
     }
+    
+    public String getProgress(){
+        return this.progress;
+    }
+
+    public void setProgress(String progress){
+        this.progress = progress;
+    }
 
     public Client getClient(){
         return this.client;
@@ -78,6 +92,6 @@ public class Order implements Serializable{
 
     @Override
     public String toString(){
-        return "Order\nId: " + this.id + "\nDate: " + this.date + "\nClient: " + this.client;
+        return "Order\nId: " + this.id + "\nDate: " + this.date + "\nProgress: " + this.progress + "\nClient: " + this.client;
     }
 }

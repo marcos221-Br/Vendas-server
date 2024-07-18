@@ -44,4 +44,8 @@ public class ClientService{
     public Client getClientByCellphone(String cellphone){
         return this.clientRepository.findByCellphone(cellphone);
     }
+
+    public Client getClientByName(String name){
+        return this.clientRepository.findByName(name);
+    }
 }

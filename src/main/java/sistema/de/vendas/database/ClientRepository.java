@@ -9,4 +9,7 @@ public interface ClientRepository extends JpaRepository<Client, Integer>{
     
     @Query(value = "SELECT * FROM clients WHERE cellphone=?",nativeQuery = true)
     public Client findByCellphone(String cellphone);
+
+    @Query(value = "SELECT * FROM clients WHERE name=?",nativeQuery = true)
+    public Client findByName(String name);
 }

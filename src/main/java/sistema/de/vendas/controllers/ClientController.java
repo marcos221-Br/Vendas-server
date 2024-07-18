@@ -32,9 +32,13 @@ public class ClientController {
         return this.clientService.getAllClients();
     }
     
-    //@GetMapping("/{id}")
-    public Client getClientById(@PathVariable Integer id) {
-        return this.clientService.getClientById(id);
+    @GetMapping("/{search}")
+    public Client getClient(@PathVariable String search) {
+        if(search.matches("[0-9]+")){
+            return this.clientService.getClientByCellphone(search);
+        }else{
+            return this.clientService.getClientByName(search);
+        }
     }
     
     @PutMapping("/{id}")
@@ -45,10 +49,5 @@ public class ClientController {
     @DeleteMapping("/{id}")
     public void deleteClient(@PathVariable Integer id){
         this.clientService.deleteClient(id);
-    }
-
-    @GetMapping("/{cellphone}")
-    public Client getClientByCellphone(@PathVariable String cellphone) {
-        return this.clientService.getClientByCellphone(cellphone);
     }
 }

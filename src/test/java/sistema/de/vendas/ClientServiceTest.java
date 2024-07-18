@@ -34,14 +34,14 @@ public class ClientServiceTest {
 
     @BeforeAll
     public void start(){
-        this.client = new Client("Marcos","42998314622");
+        //this.client = new Client("Marcos","42998314622");
         this.headers = new HttpHeaders();
         headers.add("Authorization", "Basic VXNlclRlc3RlOjEyMzQ1Ng==");
     }
 
     @Test
     public void createClientTest(){
-        this.client = new Client("Marcos","42998314622");
+        //this.client = new Client("Marcos","42998314622");
 
         HttpEntity<Client> httpEntity = new HttpEntity<>(client, headers);
 
