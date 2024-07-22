@@ -71,7 +71,7 @@ public class Order implements Serializable{
     }
 
     public void setDate(Date date){
-        this.date = date;
+        this.date = Date.valueOf(date.toLocalDate().plusDays(1));
     }
     
     public String getProgress(){
