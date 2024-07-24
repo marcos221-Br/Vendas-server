@@ -32,6 +32,10 @@ public class Item implements Serializable{
     @Column(name = "description")
     private String description;
 
+    @Basic(optional = true)
+    @Column(name = "size")
+    private String size;
+
     @Basic(optional = false)
     @Column(name = "value")
     private Float value;
@@ -41,11 +45,20 @@ public class Item implements Serializable{
     @JoinColumn(name = "idorder", referencedColumnName = "idorder")
     private Order order;
 
-    public Item(Integer id, Integer quantity, String description, Float value, Order order){
+    public Item(Integer id, Integer quantity, String description, Float value, String size, Order order){
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.value = value;
+        this.size = size;
+        this.order = order;
+    }
+
+    public Item(Integer quantity, String description, Float value, String size, Order order){
+        this.quantity = quantity;
+        this.description = description;
+        this.value = value;
+        this.size = size;
         this.order = order;
     }
 
@@ -84,6 +97,14 @@ public class Item implements Serializable{
         this.description = description;
     }
 
+    public String getSize(){
+        return this.size;
+    }
+
+    public void setSize(String size){
+        this.size = size;
+    }
+
     public Float getValue(){
         return this.value;
     }
@@ -102,6 +123,6 @@ public class Item implements Serializable{
 
     @Override
     public String toString(){
-        return "Item\nId: " + this.id + "\nQuantity: " + this.quantity + "\nDescription: " + this.description + "\nValue: " + this.value + "\nOrder: " + this.order;
+        return "Item\nId: " + this.id + "\nQuantity: " + this.quantity + "\nDescription: " + this.description + "\nSize: " + this.size + "\nValue: " + this.value + "\nOrder: " + this.order;
     }
 }
