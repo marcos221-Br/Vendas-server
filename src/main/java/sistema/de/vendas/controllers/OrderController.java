@@ -25,7 +25,7 @@ public class OrderController {
 
     @PostMapping
     public Order createOrder(@RequestBody Order order){
-        order.setDate(new Date(System.currentTimeMillis()));
+        order.setDate(Date.valueOf((new Date(System.currentTimeMillis()).toLocalDate().minusDays(1))));
         return this.orderService.createOrder(order);
     }
 
